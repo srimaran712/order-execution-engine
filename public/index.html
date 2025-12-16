@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Engine WebSocket Test</title>
+
+  <!-- Socket.IO client -->
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #messages div {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+    .status {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Order Execution – WebSocket Live Updates</h2>
+
+  <label>
+    Order ID:
+    <input id="orderIdInput" type="text" placeholder="Enter Order ID" />
+  </label>
+  <button onclick="subscribe()">Subscribe</button>
+
+  <h3>
+    Connection Status:
+    <span id="connectionStatus" class="status">Disconnected</span>
+  </h3>
+
+  <hr />
+
+  <h3>Order Updates</h3>
+  <div id="messages"></div>
+
+  <script>
+    // 🔌 Connect to WebSocket namespace
+    const socket = io('http://localhost:3000/ws', {
+      transports: ['websocket'],
+    });
+
+    // ---- Connection events ----
+    socket.on('connect', () => {
+      setStatus('✅ Connected', 'green');
+      log('Connected to WebSocket server');
+    });
+
+    socket.on('disconnect', () => {
+      setStatus('❌ Disconnected', 'red');
+      log('Disconnected from server');
+    });
+
+    socket.on('connect_error', (err) => {
+      setStatus('⚠️ Connection Error', 'red');
+      log('Connection error: ' + err.message);
+    });
+
+    // ---- Custom server events ----
+    socket.on('connected', (data) => {
+      log('Server says: ' + JSON.stringify(data));
+    });
+
+    socket.on('orderUpdate', (data) => {
+      log(
+        `📡 [${data.status}] ` +
+        JSON.stringify(data)
+      );
+    });
+
+    // ---- Subscribe to order ----
+    function subscribe() {
+      const orderId = document
+        .getElementById('orderIdInput')
+        .value
+        .trim();
+
+      if (!orderId) {
+        log('⚠️ Please enter a valid Order ID');
+        return;
+      }
+
+      log(`🔔 Subscribing to order ${orderId}`);
+      socket.emit('getOrderById', { orderId });
+    }
+
+    // ---- Helpers ----
+    function log(message) {
+      const div = document.createElement('div');
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      document.getElementById('messages').appendChild(div);
+    }
+
+    function setStatus(text, color) {
+      const el = document.getElementById('connectionStatus');
+      el.textContent = text;
+      el.style.color = color;
+    }
+  </script>
+</body>
+</html>
