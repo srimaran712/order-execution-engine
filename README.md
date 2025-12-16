@@ -60,6 +60,7 @@ order-execution/
    git clone https://github.com/srimaran712/order-execution-engine.git
    cd order-execution-engine/order-execution
    ```
+# git branch master
 
 2. **Install dependencies**
    ```bash
@@ -116,15 +117,7 @@ order-execution/
 - `order.confirmed` - Emitted when an order is confirmed
 - `order.completed` - Emitted when an order is completed
 
-## 🔧 Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `PORT` | Application port | `3000` |
-| `NODE_ENV` | Environment (development/production) | `development` |
-| `DB_*` | Database connection settings | - |
-| `REDIS_*` | Redis connection settings | - |
-| `JWT_SECRET` | Secret for JWT token signing | - |
 
 ## 🤝 Contributing
 
