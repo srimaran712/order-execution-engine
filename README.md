@@ -43,7 +43,7 @@ order-execution/
 - **Queue System**: BullMQ with Redis
 - **API**: RESTful API
 - **Language**: TypeScript
-- **Containerization**: Docker (optional)
+
 
 ## 📦 Prerequisites
 
@@ -57,8 +57,8 @@ order-execution/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/order-execution-system.git
-   cd order-execution-system/order-execution
+   git clone https://github.com/srimaran712/order-execution-engine.git
+   cd order-execution-engine/order-execution
    ```
 
 2. **Install dependencies**
@@ -75,29 +75,12 @@ order-execution/
    PORT=3000
    NODE_ENV=development
 
-   # Database
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_USERNAME=your_db_user
-   DB_PASSWORD=your_db_password
-   DB_NAME=order_execution
-
-   # Redis
-   REDIS_HOST=localhost
-   REDIS_PORT=6379
-   REDIS_PASSWORD=
-
-   # JWT (if using authentication)
-   JWT_SECRET=your_jwt_secret
+  
    ```
 
-4. **Database Setup**
-   - Create a PostgreSQL database
-   - Update the database configuration in `.env`
-   - Run migrations (if any)
 
-5. **Start Redis**
-   Make sure Redis server is running locally or update the Redis configuration in `.env`
+
+
 
 ## 🏃 Running the Application
 
