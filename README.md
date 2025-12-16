@@ -1,98 +1,170 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Order Execution System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A high-performance order processing system built with NestJS, WebSockets, and Redis Queue for real-time order management and processing.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- Real-time order processing with WebSocket support
+- Background job processing using BullMQ and Redis
+- RESTful API for order management
+- Event-driven architecture for order status updates
+- Database integration with TypeORM
+- Environment-based configuration
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🏗️ Project Structure
 
-## Project setup
-
-```bash
-$ npm install
+```
+order-execution/
+├── src/
+│   ├── database/        # Database configuration and migrations
+│   ├── dtos/            # Data Transfer Objects
+│   ├── entities/        # TypeORM entities
+│   ├── order/           # Order processing logic
+│   │   ├── order.controller.ts    # REST API endpoints
+│   │   ├── order.gateway.ts       # WebSocket gateway
+│   │   ├── order.processor.ts     # Background job processor
+│   │   ├── order.service.ts       # Business logic
+│   │   └── order-events.publisher.ts  # Event publisher
+│   ├── queue/           # Queue configuration
+│   │   └── queue.module.ts
+│   ├── app.module.ts    # Root application module
+│   └── main.ts          # Application entry point
+├── test/                # Test files
+├── .env                 # Environment variables
+├── package.json         # Dependencies and scripts
+└── tsconfig.json        # TypeScript configuration
 ```
 
-## Compile and run the project
+## 🛠️ Tech Stack
 
-```bash
-# development
-$ npm run start
+- **Backend Framework**: NestJS
+- **Database**: PostgreSQL (with TypeORM)
+- **Real-time**: WebSockets (Socket.IO)
+- **Queue System**: BullMQ with Redis
+- **API**: RESTful API
+- **Language**: TypeScript
+- **Containerization**: Docker (optional)
 
-# watch mode
-$ npm run start:dev
+## 📦 Prerequisites
 
-# production mode
-$ npm run start:prod
-```
+- Node.js (v16 or later)
+- npm or yarn
+- Redis server (local or remote)
+- PostgreSQL database
+- Git
 
-## Run tests
+## 🚀 Installation
 
-```bash
-# unit tests
-$ npm run test
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/order-execution-system.git
+   cd order-execution-system/order-execution
+   ```
 
-# e2e tests
-$ npm run test:e2e
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-# test coverage
-$ npm run test:cov
-```
+3. **Set up environment variables**
+   Create a `.env` file in the root directory with the following variables:
+   ```env
+   # Server
+   PORT=3000
+   NODE_ENV=development
 
-## Deployment
+   # Database
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_USERNAME=your_db_user
+   DB_PASSWORD=your_db_password
+   DB_NAME=order_execution
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+   # Redis
+   REDIS_HOST=localhost
+   REDIS_PORT=6379
+   REDIS_PASSWORD=
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+   # JWT (if using authentication)
+   JWT_SECRET=your_jwt_secret
+   ```
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+4. **Database Setup**
+   - Create a PostgreSQL database
+   - Update the database configuration in `.env`
+   - Run migrations (if any)
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5. **Start Redis**
+   Make sure Redis server is running locally or update the Redis configuration in `.env`
 
-## Resources
+## 🏃 Running the Application
 
-Check out a few resources that may come in handy when working with NestJS:
+1. **Development mode**
+   ```bash
+   npm run start:dev
+   ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+2. **Production build**
+   ```bash
+   npm run build
+   npm run start:prod
+   ```
 
-## Support
+3. **Running tests**
+   ```bash
+   npm test
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🌐 API Endpoints
 
-## Stay in touch
+### Orders
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
+- `POST /api/orders/execute` - Create a new order returns order id in the response and process the order with bullmq calling the websocket connection to emit events
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+### WebSocket Events
+- `order.created` - Emitted when a new order is created
+- `order.building` - Emitted when an order is in building
+- `order.routing` - Emitted when an order is price comparison
+- `order.confirmed` - Emitted when an order is confirmed
+- `order.completed` - Emitted when an order is completed
+
+## 🔧 Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PORT` | Application port | `3000` |
+| `NODE_ENV` | Environment (development/production) | `development` |
+| `DB_*` | Database connection settings | - |
+| `REDIS_*` | Redis connection settings | - |
+| `JWT_SECRET` | Secret for JWT token signing | - |
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- NestJS 
+- BullMQ 
+- Socket.IO 
+- TypeORM 
+- Redis
+- PostgreSQL
+
+
+# Created By 
+
+Manimaran Srinivasan
