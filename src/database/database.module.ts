@@ -7,13 +7,13 @@ import { Entities } from '../entities/initEntity.entity';
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: () => ({
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: this.configService.get('DB_HOST'),
+        host: configService.get<string>('DB_HOST'),
         port: 5433,
-        username: this.configService.get('DB_USERNAME'),
-        password: this.configService.get('DB_PASSWORD'),
-        database: this.configService.get('DB_NAME'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
         entities: Entities,
         synchronize: true,
       }),
