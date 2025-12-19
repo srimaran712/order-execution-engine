@@ -53,7 +53,7 @@ export class OrderProcessor extends WorkerHost {
       // 1. PENDING (already set)
 
       // 2. ROUTING - Check both DEXs
-      await this.delay(2000);
+      await this.delay(5000);
       await this.orderRepository.update(order.orderId, {
         status: OrderStatus.ROUTING,
       });
