@@ -29,7 +29,7 @@ const getMockPrice = (tokenIn: string, tokenOut: string) => {
   return prices[key] || 1;
 };
 
-@Processor('orders')
+@Processor('orders',{concurrency:10})
 export class OrderProcessor extends WorkerHost {
   constructor(
     private ordersGateway: OrderGateway,

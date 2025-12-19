@@ -100,12 +100,16 @@ order-execution/
    ```bash
    npm test
    ```
+## API domain 
+https://order-execution-engine-1-n0ru.onrender.com
 
+## health check
+https://order-execution-engine-1-n0ru.onrender.com
 ## 🌐 API Endpoints
 
 ### Orders
 
-
+EndPoint - `https://order-execution-engine-1-n0ru.onrender.com/api/create/orders/execute`
 - `POST /api/orders/execute` - Create a new order returns order id in the response and process the order with bullmq calling the websocket connection to emit events
 
 
